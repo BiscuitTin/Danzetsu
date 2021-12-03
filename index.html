@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP(S) Images</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container > h1 {
+            width: 100%;
+            text-align: center;
+        }
+        .container > .imgs {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .container > .imgs > .img-container {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+        }
+        .container > .imgs > .img-container > img {
+            width: 300px;
+            height: 240px;
+            border: 1px solid #ccc;
+        }
+        .container > .imgs > .img-container > p {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .container > .result-text {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTTP(S) Images</h1>
+        <div class="imgs">
+            <div class="img-container">
+                <img id="http-img" src="http://biscuittin.github.io/Danzetsu/200.jpeg" alt="Cat 200">
+                <p>HTTP image</p>
+            </div>
+            <div class="img-container">
+                <img id="https-img" src="https://biscuittin.github.io/Danzetsu/200.jpeg" alt="Cat 200">
+                <p>HTTPS image</p>
+            </div>
+        </div>
+        <p class="result-text">
+            Result:&nbsp;
+            <span id="result-value"></span>
+        </p>
+    </div>
+    <script>
+        (function () {
+            function getResult (http, https, resultValue) {
+                if (http && https) {
+                    resultValue.innerText = 'HTTP and HTTPS images are loaded';
+                }
+                if (http && !https) {
+                    resultValue.innerText = 'HTTP image is loaded';
+                }
+                if (!http && https) {
+                    resultValue.innerText = 'HTTPS image is loaded';
+                }
+                if (!http && !https) {
+                    resultValue.innerText = 'No images are loaded';
+                }
+            }
+            const httpImg = document.getElementById('http-img');
+            const httpsImg = document.getElementById('https-img');
+            const resultValue = document.getElementById('result-value');
+            let http, https = false;
+            httpImg.onload = function (ev) {
+                console.log('HTTP image loaded', ev);
+                http = true;
+                getResult(http, https, resultValue);
+            };
+            httpsImg.onload = function (ev) {
+                console.log('HTTPS image loaded', ev);
+                https = true;
+                getResult(http, https, resultValue);
+            };
+        })();
+    </script>
+</body>
+</html>
